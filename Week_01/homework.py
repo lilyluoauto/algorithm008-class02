@@ -74,11 +74,104 @@ class solution():
         del nums[0:n - diff] #删除操作，O(n)
         print(nums)
 
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        ####递归调用######
+        ### 40 ms , 13.4 M
+
+        if l1 is None:
+            return l2
+        elif l2 is None:
+            return l1
+        elif l1.val < l2.val:
+            l1.next = self.mergeTwoLists(l1.next, l2)
+            return l1
+        else:
+            l2.next = self.mergeTwoLists(l1, l2.next)
+            return l2
+
+
+        #####迭代，遍历元素，建立一个新的listnode prehead
+        ## 20 ms 12.7 M
+
+        prehead = ListNode(-1)
+
+        prev = prehead
+        while l1 and l2:
+            if l1.val <= l2.val:
+                prev.next = l1
+                l1 = l1.next
+            else:
+                prev.next = l2
+                l2 = l2.next
+            prev = prev.next
+
+        # exactly one of l1 and l2 can be non-null at this point, so connect
+        # the non-null list to the end of the merged list.
+        prev.next = l1 if l1 is not None else l2
+
+        return prehead.next
+
+    def merge(self, nums1, m, nums2, n):
+        """
+        :type nums1: List[int]
+        :type m: int
+        :type nums2: List[int]
+        :type n: int
+        :rtype: None Do not return anything, modify nums1 in-place instead.
+        """
+        if m < len(nums1):
+            del nums1[m:]
+        if n < len(nums2):
+            del nums2[n:]
+
+        if nums1 == []:
+            for item in nums2:
+                nums1.append(item)
+        else:
+            if nums2 != []:
+                m = len(nums1)
+                n = len(nums2)
+                j = 0
+                i = 0
+                while i < m:
+                    if nums1[i] >= nums2[j]:
+                        nums1.insert(i, nums2[j])
+                        j = j + 1
+                        m=m+1
+                        if j>=n: break
+                    i = i+1
+                i = len(nums1)-1
+                while j < n:
+                    if nums1[i] < nums2[j]:
+                        nums1.extend(nums2[j:])
+                        break
+                    else:
+                        nums1.insert(i, nums2[j])
+                        j = j + 1
+                        i = i + 1
+
+
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+
+
 
 
 
 if __name__ == "__main__":
     so = solution()
-    nums = [0,0,1,1,1,2,2,3,4,5,5,6]
+    nums1 = [1,5,8,0,0,0,0,0]
+
+
+    nums2= [-1,2,2,4,6]
     # l = so.removeDuplicates(nums)
-    so.rotate(nums,3)
+    # so.rotate(nums,3)
+    so.merge(nums1,3,nums2,5)
