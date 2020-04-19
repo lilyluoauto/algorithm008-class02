@@ -36,3 +36,9 @@
 * * python的container的操作优势显现了出来，需要好好学习这部分的内容
 * * 字符串的正则表达式操作，字符串操作需要好好学习
 
+6. RoateArray
+* deque 的rotate 功能
+
+7. firstUniqueChar
+* map 功能的使用
+* 总结： 了解其他的dict:userDict, defaultDict
