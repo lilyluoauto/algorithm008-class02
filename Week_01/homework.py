@@ -14,7 +14,7 @@ class solution():
 
     def removeDuplicates(self, nums) -> int:
         '''1. remove-duplicates-from-sorted-array'''
-        # 1. 第一种解法，单循环，判定剩余的项中是否存在相同的，有则删除，无则加1.
+        # 1. 第一种解法，单循环，判定剩余的项中是否存在相同的，有则删除，无则加i+1.
         ##### 需注意list index out of。 用时2680 mS，内存消耗：14.7 MB
 
         # i = 0

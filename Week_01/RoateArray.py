@@ -6,11 +6,13 @@
 # Create time: 2020-02-27 14:34
 # IDE: PyCharm
 # =========================================================
+from collections import deque
+
 import time
 
 import numpy as np
 
-class LeetcodeSolution(object):
+class Solution(object):
 
     ###rotate array
     # 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
@@ -41,159 +43,56 @@ class LeetcodeSolution(object):
 #
 #  Related Topics 数组
 
-    def RotateArray(self,nums,k):
+    def rotateArray_1(self,nums,k):
         '''
         :param nums: List (int)
         :param k: int
         :return: None
         '''
-        st=time.time()
-        # s2=nums.copy()
-        if k> len(nums):
-            k=k-len(nums)
-        s2=nums[len(nums)-k:]
-        s2.extend(nums[:k])
-        for idx,itr in enumerate(s2):
-            nums[idx]=itr
-        # output=np.array(s2)
+        # 1.数组的切片来做。需要考虑数组长度的动态变化和旋转次数如果大于数组长度的循环操作。
+        ## 用时44ms
+        n = len(nums)
+        if k >= n:
+            diff = k - n
+        else:
+            diff = k
+        # k = k % n
 
-        ed=time.time()
-        print("diff time:",ed-st)
+        nums.extend(nums[0:n - diff])
+        del nums[0:n - diff]  # 删除操作，O(n)
+        print(nums)
 
-    def rotate(self, nums, k):
+    def rotateArray_2(self, nums, k):
         """
         :type nums: List[int]
         :type k: int
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-
-        # s2=nums[len(nums)-k:]
-        # s2.extend(nums[0:len(nums)-k])
-        # nums=s2
-        # # print("input is {}\noutput is {}".format(nums, s2))
-        # print(nums)
-        #reverse the array
-        # for i in range(k):
-        #     a = nums[i]
-        #     nums[i] = nums[len(nums)- 1 - i]
-        #     nums[len(nums)- i - 1] = a
-        # print(nums)
-        # for i in range(int((len(nums)-k)/2)):
-        #     a = nums[k+i]
-        #     nums[k+i]=nums[len(nums)-1-i]
-        #     nums[len(nums)-1-i]=a
-        # for i in range(int(k/2)):
-        #     a=nums[i]
-        #     nums[i]=nums[k-i-1]
-        #     nums[k-i-1]=a
-        # print(nums)
-        # nums.reverse()
-        # for i in range(int(len(nums)/2)):
-        #     a=nums[i]
-        #     nums[i]=nums[len(nums)-1-i]
-        #     nums[len(nums)-1-i]=a
-        #
-        # for i in range(int(k/2)):
-        #     a=nums[i]
-        #     nums[i]=nums[k-1-i]
-        #     nums[k-1-i]=a
-        # for i in range(int((len(nums)-k)/2)):
-        #     a=nums[k+i]
-        #     nums[k+i]=nums[len(nums)-1-i]
-        #     nums[len(nums)-1-i]=a
-        st=time.time()
-        self.ReverseArray(nums,0)
-        if k>len(nums):
-            k=k-len(nums)
-        self.ReverseArray(nums,k,'start')
-        self.ReverseArray(nums,k)
-        ed=time.time()
+        #第0个和最后一个互换，第1个和倒数第二个互换
+        #k值需要考虑是否超出数组长度
+        if k > len(nums):
+            k = k - len(nums)
+        for i in range(k):
+            # a = nums[i]
+            # nums[i] = nums[len(nums)- 1 - i]
+            # nums[len(nums)- i - 1] = a
+            nums[i],nums[len(nums)-i-1] = nums[len(nums)-i-1],nums[i]
         print(nums)
-        print("diff time:",ed-st)
-        # count=0
-        # for i in range(k):
-        #     a = nums[-1]
-        #     j=len(nums)-1
-        #     while j>0:
-        #         nums[j]=nums[j-1]
-        #         j-=1
-        #         count+=1
-        #     nums[0]=a
-        # print(count)
-        # for i in range(k):
-        #     a=nums[-1]
-        #     for j in range(len(nums)-1,0,-1):
-        #         nums[j] = nums[j - 1]
-        #     nums[0]=a
 
+    def rotateArray_3(self, nums, k):
+        '''deque 的rotate 功能，本体需要空间复杂度是in-place的，但是这个空间复杂度是O(n)的
+        '''
+        nums1 = deque(nums)
+        nums1.rotate(k)
+        for idx,val in enumerate(nums1):
+            nums[idx] = val
+        print(nums,nums1)
 
+if __name__ == "__main__":
+    so = Solution()
+    s= [1,2,3,4,5,6,7]
+    so.rotateArray_3(s,2)
 
-
-    def ReverseArray(self,nums,k,direction='end'):
-        if direction=='start':
-            for i in range(int(k/2)):
-                a = nums[i]
-                j=k-1-i
-                if(j>=len(nums)):
-                    break
-                nums[i] = nums[k - 1 - i]
-                nums[k - 1 - i] = a
-        else:
-            for i in range(int((len(nums) - k) / 2)):
-                a = nums[k + i]
-                nums[k + i] = nums[len(nums) - 1 - i]
-                nums[len(nums) - 1 - i] = a
-
-    # 将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
-    #
-    #  示例：
-    #
-    #  输入：1->2->4, 1->3->4
-    # 输出：1->1->2->3->4->4
-    #
-    #  Related Topics 链表
-
-    # leetcode submit region begin(Prohibit modification and deletion)
-    # Definition for singly-linked list.
-    class ListNode(object):
-        def __init__(self, x):
-            self.val = x
-            self.next = None
-
-    def mergeTwoLists(self, l1, l2):
-        """
-        :type l1: ListNode
-        :type l2: ListNode
-        :rtype: ListNode
-        """
-        if l1 is None:
-            return l2
-        elif l2 is None:
-            return l1
-        elif l1.val<l2.val:
-            l1.next=self.mergeTwoLists(l1.next,l2)
-            return l1
-        else:
-            l2.next=self.mergeTwoLists(l2.next,l1)
-            return l2
-
-
-
-if __name__=="__main__":
-
-    node1=ListNode(1)
-    node2=ListNode(2)
-    node3=ListNode(4)
-    l1=[1,2,4]
-    l2=[1,3,4]
-    # ,4,5,6,7,8,9,10]
-    # s=[-1]
-    # ,-100,3,99]
-    # k=4
-    so=LeetcodeSolution()
-    # so.rotate(s,k)
-    # so.RotateArray(s,k)
-    so.mergeTwoLists(l1,l2)
 
 
 

@@ -9,7 +9,7 @@
 """
 # Definition for a Node.
 """
-from collections import deque
+from collections import deque, defaultdict
 
 
 class Node:
@@ -59,6 +59,7 @@ class Solution:
         return output
 
     def levelOrder_1(self, root: 'Node') -> list[list[int]]:
+        '''迭代'''
 
         if root is None:
             return []
@@ -80,14 +81,50 @@ class Solution:
             if len(result) == level:
                 result.append([])
             result[level].append(node.val)
+            resultdic[level].append(node.val)
             for child in node.children:
                 traverse_node(child, level + 1)
 
         result = []
+        #可以用defaultdict来做
+        resultdic = defaultdict(list)
 
         if root is not None:
             traverse_node(root, 0)
-        return result
+        # return result
+        return list(resultdic.values())
+
+    def postOrder_1(self, root: 'Node') -> list[list[int]]:
+        ''' 递归
+        68 ms 很慢，需要优化'''
+        output = deque()
+        def traverse_node(node):
+            output.appendleft(node.val)
+            if node.children is not None:
+                for child in node.children[::-1]:
+                    traverse_node(child)
+
+        if root is None:
+            return []
+        if root is not None:
+            traverse_node(root)
+
+        return output
+
+    def postOrder_2(self, root: 'Node') -> list[list[int]]:
+        ''' 迭代
+        '''
+        if root is None:
+            return []
+        stack = [root,]
+        output = []
+        while stack:
+            node = stack.pop()
+            output.append(node.val)
+            if node.children is not None:
+                stack.extend(node.children)
+
+        return output[::-1]
 
     
 

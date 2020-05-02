@@ -58,8 +58,8 @@ class MyCircularDeque(object):
         """
         self.front = 0
         self.rear = 0
-        self.capacity = k + 1
-        self.arr = [0 for _ in range(self.capacity)]
+        self.capacity = k
+        self.arr = []
 
     def insertFront(self, value):
         """
@@ -70,9 +70,9 @@ class MyCircularDeque(object):
 
         if self.isFull():
             return False
-        a=(self.front - 1 + self.capacity)
-        self.front = a % self.capacity
-        self.arr[self.front] = value
+        self.arr.insert(0,value)
+        # a = (self.front - 1 + self.capacity)
+        # self.front = a % self.capacity
         return True
 
     def insertLast(self, value):
@@ -83,8 +83,8 @@ class MyCircularDeque(object):
         """
         if self.isFull():
             return False
-        self.arr[self.rear] = value
-        self.rear = (self.rear - 1) % self.capacity
+        self.arr.append(value)
+        self.rear=len(self.arr)-1
         return True
 
     def deleteFront(self):
@@ -94,7 +94,8 @@ class MyCircularDeque(object):
         """
         if self.isEmpty():
             return False
-        self.front = (self.front + 1) % self.capacity
+        del self.arr[self.front]
+        # self.front = (self.front - 1) % self.capacity
         return True
 
     def deleteLast(self):
@@ -104,7 +105,8 @@ class MyCircularDeque(object):
         """
         if self.isEmpty():
             return False
-        self.rear = (self.rear - 1 + self.capacity) % self.capacity
+        del self.arr[-1]
+        # self.rear = len(self.arr)-1
         return True
 
     def getFront(self):
@@ -114,7 +116,7 @@ class MyCircularDeque(object):
         """
         if self.isEmpty():
             return -1
-        return self.arr[self.front]
+        return self.arr[0]
 
     def getRear(self):
         """
@@ -123,7 +125,7 @@ class MyCircularDeque(object):
         """
         if self.isEmpty():
             return -1
-        return self.arr[self.rear]
+        return self.arr[-1]
 
     def isEmpty(self):
         """
@@ -137,19 +139,34 @@ class MyCircularDeque(object):
         Checks whether the circular deque is full or not.
         :rtype: bool
         """
-        return (self.rear + 1) % self.capacity == self.front
+        # print((self.rear+1) % self.capacity)
+        # return (self.rear+1) % self.capacity == self.front
+        # return self.rear == self.front
+        return len(self.arr)== self.capacity
 
 # Your MyCircularDeque object will be instantiated and called as such:
 if __name__=="__main__":
-    k=4
+    k=3
     value=3
-    obj = MyCircularDeque(k)
-    param_1 = obj.insertFront(value)
-    param_2 = obj.insertLast(value)
-    param_3 = obj.deleteFront()
-    param_4 = obj.deleteLast()
-    param_5 = obj.getFront()
+    obj = MyCircularDeque(8)
+
+    param_2 = obj.insertLast(5)
+    param_3 = obj.insertLast(2)
+    param_4 = obj.insertFront(3)
+    param_5 = obj.insertFront(4)
+
+
     param_6 = obj.getRear()
-    param_7 = obj.isEmpty()
-    param_8 = obj.isFull()
+    param_7 = obj.isFull()
+    param_8 = obj.deleteLast()
+    param_9 = obj.insertFront(4)
+
+    param_10 = obj.getFront()
+    print(param_10)
+
+# ["MyCircularDeque","insertLast","insertLast","insertFront","insertFront","getRear",
+#  "isFull","deleteLast","insertFront","getFront"]
+# [[3],[1],[2],[3],[4],[],[],[],[4],[]]
+
+# [null,true,true,true,false,2,true,true,true,4]
 # leetcode submit region end(Prohibit modification and deletion)

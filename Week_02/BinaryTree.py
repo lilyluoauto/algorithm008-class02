@@ -96,6 +96,63 @@ class Solution:
                 res.append(node.val)
         return res
 
+    def postorder_1(self, root) -> list[int]:
+        """binary tree post order
+        递归调用"""
+        res = []
+        if not root:
+            return []
+
+        def helper(root):
+            res.append(root.val)
+            if root.right is not None:
+                helper(root.right)
+            if root.left is not None:
+                helper(root.left)
+
+        helper(root)
+        return res[::-1]
+
+    def postorder_2(self, root) -> list[int]:
+        """binary tree post order
+        递归调用"""
+        res = []
+        if not root:
+            return []
+
+        def helper(root):
+
+            if root.left is not None:
+                helper(root.left)
+            if root.right is not None:
+                helper(root.right)
+            res.append(root.val)
+
+        helper(root)
+        return res
+
+    def postorder_3(self, root) -> list[int]:
+        """binary tree post order
+        迭代调用"""
+        res = []
+        if not root:
+            return []
+        stack = [root,]
+
+        while stack:
+            node = stack.pop()
+
+            if node.left is not None:
+                stack.append(node.left)
+            if node.right is not None:
+                stack.append(node.right)
+            res.append(node.val)
+
+        return res[::-1]
+
+
+
+
 
 
 
