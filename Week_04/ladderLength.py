@@ -1,14 +1,17 @@
 from collections import defaultdict
 class Solution(object):
-    def ladderLength(self, beginWord, endWord, wordList):
+    def ladderLength(self,beginWord,endWord,wordList):
         """
         :type beginWord: str
         :type endWord: str
         :type wordList: List[str]
         :rtype: int
         """
-
-        if endWord not in wordList or not endWord or not beginWord or not wordList:
+        s1 = endWord not in wordList
+        s2 = not endWord
+        s3 = not beginWord
+        s4 = not wordList
+        if s1 or s2 or s3 or s4:
             return 0
 
         # Since all words are of same length.
@@ -47,8 +50,9 @@ class Solution(object):
                 all_combo_dict[intermediate_word] = []
         return 0
 so = Solution()
-beginWord = "hit",
-endWord = "cog",
+beginWord = "hit"
+endWord = "cog"
 wordList = ["hot","dot","dog","lot","log","cog"]
 
-so.ladderLength(beginWord,endWord,wordList)
+res = so.ladderLength(beginWord,endWord,wordList)
+print(res)
