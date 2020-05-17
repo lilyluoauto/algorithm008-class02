@@ -47,8 +47,8 @@ class Solution(object):
                 all_combo_dict[intermediate_word] = []
         return 0
 so = Solution()
-beginWord = "hit",
-endWord = "cog",
+beginWord = "hit"
+endWord = "cog"
 wordList = ["hot","dot","dog","lot","log","cog"]
-
-so.ladderLength(beginWord,endWord,wordList)
+maxLen = so.ladderLength(beginWord,endWord,wordList)
+print(maxLen)

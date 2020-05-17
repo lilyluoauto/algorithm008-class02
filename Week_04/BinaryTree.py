@@ -7,6 +7,10 @@
 # IDE: PyCharm
 # =========================================================
 # Definition for a binary tree node.
+from collections import deque, defaultdict
+
+from Week_03 import buildTree
+
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -44,7 +48,7 @@ class Solution:
                 stack.append(root.left)
         return output
 
-    def inorderTraversal_1(self, root: TreeNode) -> list[int]:
+    def inorderTraversal_1(self, root):
         """recursive
         时间： 52 ms 很慢
         """
@@ -61,7 +65,7 @@ class Solution:
         helper(root)
         return res
 
-    def inorderTraversal_2(self, root: TreeNode) -> list[int]:
+    def inorderTraversal_2(self, root):
         """iterator
         时间：
         """
@@ -76,7 +80,7 @@ class Solution:
             curr = curr.right
         return output
 
-    def inorderTraversal_3(self, root: TreeNode) -> list[int]:
+    def inorderTraversal_3(self, root):
         '''使用颜色标记节点的状态，新节点为白色，已访问的节点为灰色。
     如果遇到的节点为白色，则将其标记为灰色，然后将其右子节点、自身、左子节点依次入栈。
     如果遇到的节点为灰色，则将节点的值输出。
@@ -96,7 +100,7 @@ class Solution:
                 res.append(node.val)
         return res
 
-    def postorder_1(self, root) -> list[int]:
+    def postorder_1(self, root):
         """binary tree post order
         递归调用"""
         res = []
@@ -113,7 +117,7 @@ class Solution:
         helper(root)
         return res[::-1]
 
-    def postorder_2(self, root) -> list[int]:
+    def postorder_2(self, root):
         """binary tree post order
         递归调用"""
         res = []
@@ -131,7 +135,7 @@ class Solution:
         helper(root)
         return res
 
-    def postorder_3(self, root) -> list[int]:
+    def postorder_3(self, root):
         """binary tree post order
         迭代调用"""
         res = []
@@ -150,17 +154,48 @@ class Solution:
 
         return res[::-1]
 
+    def levelOrder_1(self, root):
+        '''迭代，采用队列,BFS,48ms'''
+        output = []
+        if root is None:
+            return []
+        que = deque(root)
+        level = len(que)
+        while que:
+            res = []
+            for i in range(level):
+                root = que.popleft()
+                res.append(root.val)
+                if root.left is not None:
+                    que.append(root.left)
+                if root.right is not None:
+                    que.append(root.right)
+            level = len(que)
+            output.append(res)
+        return output
 
+    def levelOrder_2(self, root):
+        '''递归,回溯 56ms'''
+        output = defaultdict(list)
+        if root is None:
+            return []
+        def helper(level,node):
+            output[level].append(node.val)
+            if node.left is not None:
+                helper(level+1,node.left)
+            if node.right is not None:
+                helper(level+1,node.right)
+        helper(0,root)
+        return list(output.values())
 
+preorder = [3,9,20,15,7]
+inorder = [9,3,15,20,7]
+bt = buildTree.Solution()
+binary_tree = bt.buildTree(preorder,inorder)
+so = Solution()
+out = so.levelOrder_2(binary_tree)
+print(out)
 
-
-
-
-if __name__ == "__main__":
-    root = [1,None,2,3]
-    so = Solution()
-    l = so.preorderTraversal_2(root)
-    print(l)
 
 
 
