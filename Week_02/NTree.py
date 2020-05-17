@@ -123,7 +123,6 @@ class Solution:
             output.append(node.val)
             if node.children is not None:
                 stack.extend(node.children)
-
         return output[::-1]
 
     
