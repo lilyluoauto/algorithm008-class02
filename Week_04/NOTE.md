@@ -6,6 +6,35 @@
 
 4. 二分查找
 - 中间分数组，判断左右数组是否有序。
+- 模板：
+```
+left, right = 0, len(array) - 1 
+while left <= right: 
+	  mid = (left + right) / 2 
+	  if array[mid] == target: 
+		    # find the target!! 
+		    break or return result 
+	  elif array[mid] < target: 
+		    left = mid + 1 
+	  else: 
+		    right = mid - 1
+
+```
+- 半有序数组二分查找解题思路
+```
+ - left,right = 0,len(array)-1
+    - mid = (left +right)/2
+    - if array[mid-1]<array[mid]<array[mid+1] or array[mid-1]>array[mid]>array[mid+1]
+            right = mid-1
+            递归，找到了就return，没找到
+            left = mid +1, 递归，找到return
+       else：
+          return array[mid]
+```
+   
+          
+         
+    
 
 5. collections: namedtuple
 - 定义：

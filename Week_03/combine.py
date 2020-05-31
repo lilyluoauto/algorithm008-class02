@@ -34,7 +34,7 @@ class Solution:
                 combination.append(nums[i])
                 if len(combination)<=k:
                     backtrack(combination,nums[i+1:])
-                del combination[-1]
+                combination.pop()
 
         backtrack([],nums_list)
         return output

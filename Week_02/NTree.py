@@ -27,8 +27,8 @@ class Solution:
         def helper(root):
             if not root:
                 return
-
             traverse_path.append(root.val)
+
             for child in root.children:
                 helper(child)
 
@@ -58,7 +58,7 @@ class Solution:
 
         return output
 
-    def levelOrder_1(self, root: 'Node') -> list[list[int]]:
+    def levelOrder_1(self, root) :
         '''迭代'''
 
         if root is None:
@@ -75,7 +75,7 @@ class Solution:
             output.append(level)
         return output
 
-    def levelOrder_2(self, root: 'Node') -> list[list[int]]:
+    def levelOrder_2(self, root):
         ''' 递归'''
         def traverse_node(node, level):
             if len(result) == level:
@@ -94,7 +94,7 @@ class Solution:
         # return result
         return list(resultdic.values())
 
-    def postOrder_1(self, root: 'Node') -> list[list[int]]:
+    def postOrder_1(self, root):
         ''' 递归
         68 ms 很慢，需要优化'''
         output = deque()
@@ -111,7 +111,7 @@ class Solution:
 
         return output
 
-    def postOrder_2(self, root: 'Node') -> list[list[int]]:
+    def postOrder_2(self, root):
         ''' 迭代
         '''
         if root is None:
@@ -129,14 +129,15 @@ class Solution:
 
 if __name__ == "__main__":
     children1 = Node(4)
+    print(children1.val,children1.children)
     children2 = Node(3,children1)
-    children3 = [Node(6),Node(1),children2,None]
+    children3 = [Node(6),Node(1),children2]
     children4 = Node(7)
     # root = Node(5,children2)
     root = Node(5, children3)
 
     so = Solution()
-    l = so.preorder_1(root)
+    l = so.postOrder_1(root)
     print(l)
 
 
