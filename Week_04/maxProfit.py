@@ -4,7 +4,8 @@
 # project: project
 
 class Solution:
-    def maxProfit(self, prices):
+    def maxProfit_1(self, prices):
+
         profit = 0
         for i in range(len(prices)-1):
             tmp = prices[i+1]-prices[i]
@@ -13,7 +14,11 @@ class Solution:
         print(profit)
         return profit
 
+    def maxProfit_2(self,prices):
+        '''动态规划'''
+
+
 so = Solution()
 prices = [1,3,5,2,6,9,1]
-so.maxProfit(prices)
+so.maxProfit_1(prices)
 
