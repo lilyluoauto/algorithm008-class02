@@ -139,6 +139,8 @@ if __name__ == "__main__":
     l = so.preorder_1(root)
     print(l)
 
+    dequ
+
 
 
 
