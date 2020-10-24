@@ -31,3 +31,16 @@ class LRUCache(object):
 			else:   # self.dic is full
 				self.dic.popitem(last=False)
 		self.dic[key] = value
+
+if __name__ == '__main__':
+	cache = LRUCache(2)
+
+	cache.put(1, 1)
+	cache.put(2, 2)
+	print(cache.get(1))
+	cache.put(3, 3)
+	cache.get(2)
+	cache.put(4, 4)
+	cache.get(1)
+	cache.get(3)
+	cache.get(4)
