@@ -16,7 +16,7 @@ def recursion(level, param1,param2):
     # current logic dealing
     process(level, param1,param2)
     #drill down
-    recursion((level+1,param1,param2))
+    recursion(level+1,param1,param2)
     # reverse current state if needed
     pass
 

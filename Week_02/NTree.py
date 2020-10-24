@@ -140,6 +140,8 @@ if __name__ == "__main__":
     l = so.postOrder_1(root)
     print(l)
 
+    dequ
+
 
 
 
