@@ -1,29 +1,32 @@
-#coding:utf-8
+# coding:utf-8
 #!/usr/bin/python
-#=================
+# ========================================================
 # Project: project
-# Creator: user01
-# Create time: 2020/9/24
-# Name: shortestPathBinaryMatrix
-# =======================
+# Creator: lilyluo
+# Create time: 2020-10-01 08:21
+# IDE: PyCharm
+# =========================================================
 from collections import deque
 from heapq import heappush, heappop
 
-class solution:
-    #A Star Search
-    def shortestPathBinaryMatrix(self,grid):
+
+class Solution:
+    def shortestPathBinaryMatrix(self, grid):
         shortest_path = self.a_star_graph_search(
-            start=(0, 0),
-            goal_function=self.get_goal_function(grid),
-            successor_function=self.get_successor_function(grid),
-            heuristic=self.get_heuristic(grid)
+            start              = (0, 0),
+            goal_function      = self.get_goal_function(grid),
+            successor_function = self.get_successor_function(grid),
+            heuristic          = self.get_heuristic(grid)
+
         )
         if shortest_path is None or grid[0][0] == 1:
             return -1
         else:
             return len(shortest_path)
 
+
     #A Star search Function
+
     def a_star_graph_search(self,
             start,
             goal_function,
@@ -63,10 +66,12 @@ class solution:
         while end != start:
             end = came_from[end]
 
+
             reverse_path.append(end)
         return list(reversed(reverse_path))
 
     # goal function
+
     def get_goal_function(self,grid):
         """
         >>> f = get_goal_function([[0, 0], [0, 0]])
@@ -85,7 +90,9 @@ class solution:
 
         return is_bottom_right
 
+
     #successor function
+
     def get_successor_function(self,grid):
         """
         >>> f = get_successor_function([[0, 0, 0], [0, 1, 0], [1, 0, 0]])
@@ -109,6 +116,7 @@ class solution:
 
         return get_clear_adjacent_cells
 
+
     # Heuristic
 
     def get_heuristic(self,grid):
@@ -130,9 +138,14 @@ class solution:
 
         return get_clear_path_distance_from_goal
 
+
         # BFS search
 
-    def breadth_first_search(self, grid):
+    from collections import deque
+
+    def breadth_first_search(self,grid):
+        '''BFS'''
+
         N = len(grid)
 
         def is_clear(cell):
@@ -173,7 +186,9 @@ class solution:
 
         return -1
 
+
 # priority queue implementation
+
 from heapq import heappush, heappop
 
 class PriorityQueue:
@@ -194,7 +209,9 @@ class PriorityQueue:
         return len(self.heap)
 
 if __name__ == '__main__':
-    so = solution()
+
+    so = Solution()
+
     grid = [
 	[0,0,0,1,0,0,1,0],
 	[0,0,0,0,0,0,0,0],
@@ -206,3 +223,4 @@ if __name__ == '__main__':
 	[0,0,0,0,0,1,0,0]]
     len = so.shortestPathBinaryMatrix(grid)
     print(len)
+
